@@ -1,0 +1,244 @@
+---
+layout: compress
+---
+
+<!-- Include our custom head -->
+{% include custom-head.html %}
+
+{% include lang.html %}
+
+{% assign pinned = site.posts | where: 'pin', 'true' %}
+{% assign default = site.posts | where_exp: 'item', 'item.pin != true and item.hidden != true' %}
+
+{% assign posts = '' | split: '' %}
+
+<!-- Append pinned posts -->
+{% assign posts = posts | concat: pinned %}
+
+<!-- Append default posts -->
+{% assign posts = posts | concat: default %}
+
+<div id="post-list" class="flex-grow-1 px-xl-1">
+  <!-- Custom Hero Section -->
+  <div class="hero-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="hero-content text-center">
+            <h1 class="hero-title">Welcome to My Blog <span class="wave">👋</span></h1>
+            
+            <!-- Professional badges replacing raw asterisks -->
+            <div class="professional-badges mb-4">
+              <span class="badge badge-ai">🤖 AI Engineer</span>
+              <span class="badge badge-aws">☁️ AWS ML Specialist</span>
+              <span class="badge badge-devops">🚀 DevOps Community Leader</span>
+            </div>
+            
+            <div class="hero-intro">
+              <p class="lead">Hi! I'm <strong>Ayman Aboghonim</strong>, an AI Engineer with 11+ years of experience spanning healthcare technology, analytical sciences, and engineering. I specialize in <strong>Deep Learning</strong>, <strong>Computer Vision</strong>, and <strong>Geospatial Analytics</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- What You'll Find Here Section -->
+  <div class="content-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <h2 class="section-title">🎯 What You'll Find Here</h2>
+          <div class="topics-grid">
+            <div class="topic-card">
+              <div class="topic-icon">🤖</div>
+              <h3>AI & Machine Learning</h3>
+              <p>Practical insights, tutorials, and project breakdowns</p>
+            </div>
+            <div class="topic-card">
+              <div class="topic-icon">👨‍💻</div>
+              <h3>Developer Tools</h3>
+              <p>Useful resources, prompts, and productivity tips</p>
+            </div>
+            <div class="topic-card">
+              <div class="topic-icon">🚀</div>
+              <h3>Career Development</h3>
+              <p>Transition stories, learning paths, and professional growth</p>
+            </div>
+            <div class="topic-card">
+              <div class="topic-icon">🌍</div>
+              <h3>DevOps & Community</h3>
+              <p>Leadership insights and community building experiences</p>
+            </div>
+            <div class="topic-card">
+              <div class="topic-icon">📊</div>
+              <h3>Project Showcases</h3>
+              <p>Deep dives into real-world AI implementations</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Latest Posts Section -->
+  <div class="posts-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <h2 class="section-title">✨ Latest Posts</h2>
+          {% for post in posts limit: 5 %}
+            <article class="post-preview">
+              <div class="post-meta">
+                <time datetime="{{ post.date | date_to_xmlschema }}">
+                  {{ post.date | date: site.data.locales[site.lang].df.post.strftime }}
+                </time>
+                {% if post.categories.size > 0 %}
+                  <span class="post-categories">
+                    {% for category in post.categories %}
+                      <span class="category">{{ category }}</span>
+                    {% endfor %}
+                  </span>
+                {% endif %}
+              </div>
+              <h3 class="post-title">
+                <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+              </h3>
+              <div class="post-content">
+                {% if post.description %}
+                  {{ post.description | truncate: 200 }}
+                {% else %}
+                  {{ post.content | truncate: 200 | strip_html }}
+                {% endif %}
+              </div>
+              <a href="{{ post.url | relative_url }}" class="read-more">Read more →</a>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Resources Section -->
+  <div class="featured-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <h2 class="section-title">🚀 Featured Resources</h2>
+          <div class="resources-grid">
+            <div class="resource-card">
+              <div class="resource-icon">🤖</div>
+              <h3><a href="https://github.com/aymanaboghonim/llm-prompts" target="_blank">LLM Prompts Library</a></h3>
+              <p>Professional prompt engineering made simple. Battle-tested, production-ready prompts for developers and AI practitioners. Transform your AI workflows with consistent, high-quality results.</p>
+            </div>
+            <div class="resource-card">
+              <div class="resource-icon">🌐</div>
+              <h3><a href="https://aymanaboghonim.github.io/elmentor-landing-page" target="_blank">El Mentor Landing Page</a></h3>
+              <p>Modern landing page for DevOps Vision's private mentorship community. Built with React 19.1.0 and Vite 6.3.5.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Journey Section -->
+  <div class="journey-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <h2 class="section-title">🎯 About My Journey</h2>
+          <div class="journey-content">
+            <blockquote class="career-quote">
+              <p>"The journey from geology to AI taught me that curiosity and analytical thinking are the true foundations of any successful career transition."</p>
+              <footer>— My Career Philosophy</footer>
+            </blockquote>
+            <p>Successfully transitioned from <strong>geological sciences</strong> to <strong>AI engineering</strong>, bringing unique analytical perspective to AI development. Currently contributing to DevOps Vision's global community as an Advisory Group member and building practical AI solutions for real estate and geospatial applications.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connect Section -->
+  <div class="connect-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <h2 class="section-title">📫 Let's Connect</h2>
+          <div class="social-links">
+            <a href="https://linkedin.com/in/ayman-aboghonim" class="social-link linkedin" target="_blank">
+              <i class="fab fa-linkedin-in"></i>
+              <span>LinkedIn</span>
+              <small>Professional updates and insights</small>
+            </a>
+            <a href="https://github.com/aymanaboghonim" class="social-link github" target="_blank">
+              <i class="fab fa-github"></i>
+              <span>GitHub</span>
+              <small>Check out my projects and contributions</small>
+            </a>
+            <a href="https://www.facebook.com/ayman.m.aboghonim" class="social-link facebook" target="_blank">
+              <i class="fab fa-facebook-f"></i>
+              <span>Facebook</span>
+              <small>Technical content</small>
+            </a>
+            <a href="https://github.com/DevOpsVisions" class="social-link devops" target="_blank">
+              <i class="fas fa-users"></i>
+              <span>DevOps Community</span>
+              <small>DevOps Visions</small>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Subscription Section -->
+  <div class="subscription-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="subscription-card">
+            <h3>🔔 Stay Updated</h3>
+            <p>Get notified about new posts, AI insights, and developer resources.</p>
+            <div class="subscription-form">
+              <p class="rss-info">
+                <i class="fas fa-rss"></i>
+                Subscribe via <a href="{{ '/feed.xml' | relative_url }}" target="_blank">RSS Feed</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Visitor Counter (Optional) -->
+  <div class="stats-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="stats-card">
+            <div class="stat-item">
+              <span class="stat-number">{{ site.posts.size }}</span>
+              <span class="stat-label">Blog Posts</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">{{ site.categories.size }}</span>
+              <span class="stat-label">Categories</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">{{ site.tags.size }}</span>
+              <span class="stat-label">Tags</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pagination -->
+{% if paginator.total_pages > 0 %}
+  {% include post-paginator.html %}
+{% endif %}

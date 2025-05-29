@@ -48,11 +48,17 @@ social:
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
   name: Ayman Aboghonim
   email: ayman.aboghonim@outlook.com # change to your email address
+  bio: "AI Engineer | AWS ML Specialist | DevOps Community Leader"
+  location: "Oman"
+  linkedin: "ayman-aboghonim"
+  github: "aymanaboghonim"
+  facebook: "ayman.m.aboghonim"
   links:
     # The first element serves as the copyright owner's link
     # https://twitter.com/username # change to your twitter homepage
     - https://github.com/aymanaboghonim # change to your github homepage
     - https://www.linkedin.com/in/ayman-aboghonim
+    - https://www.facebook.com/ayman.m.aboghonim
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
 
@@ -103,6 +109,13 @@ assets:
     # specify the Jekyll environment, empty means both
     # only works if `assets.self_host.enabled` is 'true'
     env: # [development|production]
+
+# Custom CSS and JS files
+custom_css:
+  - /assets/css/custom.css
+
+custom_js:
+  - /assets/js/custom.js
 
 pwa:
   enabled: true # the option for PWA feature

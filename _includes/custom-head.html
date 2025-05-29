@@ -1,0 +1,57 @@
+<!-- Custom CSS and JS for Ayman Aboghonim's blog -->
+<link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+<script defer src="{{ '/assets/js/custom.js' | relative_url }}"></script>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- Google Fonts for better typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Bootstrap CSS for responsive design (if not already included) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Enhanced meta tags for better SEO -->
+<meta name="author" content="{{ site.social.name }}">
+<meta name="description" content="{{ site.description }}">
+<meta name="keywords" content="AI, Machine Learning, AWS, DevOps, Career Development, Prompt Engineering, Technology Blog">
+
+<!-- Open Graph meta tags for social sharing -->
+<meta property="og:title" content="{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}">
+<meta property="og:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+<meta property="og:image" content="{{ site.url }}{{ site.avatar }}">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+<meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+<meta property="og:site_name" content="{{ site.title }}">
+
+<!-- Twitter Card meta tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}">
+<meta name="twitter:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+<meta name="twitter:image" content="{{ site.url }}{{ site.avatar }}">
+
+<!-- Additional performance optimizations -->
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+
+<!-- Custom theme variables -->
+<style>
+:root {
+  --primary-color: #667eea;
+  --secondary-color: #764ba2;
+  --accent-color: #a8edea;
+  --text-color: #2c3e50;
+  --light-text: #6c757d;
+  --background-light: #f8f9fa;
+  --border-color: #e9ecef;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  --font-family: 'Inter', sans-serif;
+}
+
+body {
+  font-family: var(--font-family);
+}
+</style>

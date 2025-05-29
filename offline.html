@@ -1,0 +1,211 @@
+---
+layout: page
+title: "You're Offline"
+permalink: /offline/
+sitemap: false
+---
+
+<div class="offline-page">
+  <div class="offline-content">
+    <div class="offline-icon">
+      <i class="fas fa-wifi-slash" style="font-size: 4rem; color: #6c757d; margin-bottom: 2rem;"></i>
+    </div>
+    
+    <h1>You're Currently Offline</h1>
+    
+    <p class="lead">It looks like you've lost your internet connection. Don't worry - you can still browse the pages you've visited recently!</p>
+    
+    <div class="offline-suggestions">
+      <h3>What you can do:</h3>
+      <ul>
+        <li>Check your internet connection</li>
+        <li>Browse recently visited pages (they're cached offline)</li>
+        <li>Try refreshing this page when you're back online</li>
+      </ul>
+    </div>
+    
+    <div class="offline-actions">
+      <button onclick="window.location.reload()" class="btn btn-primary">
+        <i class="fas fa-sync-alt"></i> Try Again
+      </button>
+      
+      <a href="/" class="btn btn-outline-secondary">
+        <i class="fas fa-home"></i> Go Home
+      </a>
+    </div>
+    
+    <div class="cached-pages" id="cachedPages">
+      <h4>Recently Visited Pages:</h4>
+      <div id="pagesList">
+        <!-- Cached pages will be listed here by JavaScript -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.offline-page {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.offline-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.offline-icon {
+  margin-bottom: 2rem;
+}
+
+.offline-suggestions {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: left;
+}
+
+.offline-suggestions ul {
+  margin: 1rem 0 0 0;
+  padding-left: 1.5rem;
+}
+
+.offline-suggestions li {
+  margin-bottom: 0.5rem;
+}
+
+.offline-actions {
+  margin: 2rem 0;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.btn-outline-secondary {
+  background: transparent;
+  color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+  background: #6c757d;
+  color: white;
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.cached-pages {
+  margin-top: 3rem;
+  text-align: left;
+}
+
+#pagesList {
+  margin-top: 1rem;
+}
+
+.cached-page-item {
+  display: block;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #2c3e50;
+  transition: all 0.3s ease;
+}
+
+.cached-page-item:hover {
+  background: #f8f9fa;
+  transform: translateX(5px);
+  text-decoration: none;
+  color: #667eea;
+}
+
+@media (max-width: 768px) {
+  .offline-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn {
+    width: 200px;
+    justify-content: center;
+  }
+}
+</style>
+
+<script>
+// Display cached pages if available
+document.addEventListener('DOMContentLoaded', function() {
+  const pagesList = document.getElementById('pagesList');
+  
+  // Try to get cached pages from service worker or localStorage
+  if ('caches' in window) {
+    caches.open('ayman-blog-dynamic-v1.0.0').then(cache => {
+      cache.keys().then(requests => {
+        const pages = requests
+          .map(req => req.url)
+          .filter(url => url.includes(window.location.origin) && !url.includes('/assets/'))
+          .slice(0, 5); // Show max 5 recent pages
+        
+        if (pages.length > 0) {
+          pages.forEach(url => {
+            const pageItem = document.createElement('a');
+            pageItem.href = url;
+            pageItem.className = 'cached-page-item';
+            pageItem.innerHTML = `<i class="fas fa-file-alt"></i> ${getPageTitle(url)}`;
+            pagesList.appendChild(pageItem);
+          });
+        } else {
+          pagesList.innerHTML = '<p class="text-muted">No cached pages available.</p>';
+        }
+      });
+    });
+  } else {
+    pagesList.innerHTML = '<p class="text-muted">Offline browsing not supported in this browser.</p>';
+  }
+});
+
+function getPageTitle(url) {
+  const path = new URL(url).pathname;
+  if (path === '/' || path === '/index.html') return 'Home';
+  if (path.includes('/about')) return 'About';
+  if (path.includes('/posts')) return 'Blog Posts';
+  if (path.includes('/projects')) return 'Projects';
+  if (path.includes('/contact')) return 'Contact';
+  
+  // Extract title from path
+  const segments = path.split('/').filter(s => s);
+  return segments.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ') || 'Page';
+}
+</script>

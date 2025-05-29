@@ -1,11 +1,44 @@
 <!-- Custom CSS and JS for Ayman Aboghonim's blog -->
 <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/css/accessibility.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/mobile.css' | relative_url }}">
 <script defer src="{{ '/assets/js/custom.js' | relative_url }}"></script>
 <script defer src="{{ '/assets/js/performance.js' | relative_url }}"></script>
+<script defer src="{{ '/assets/js/pwa-install.js' | relative_url }}"></script>
+
+<!-- PWA Configuration -->
+<link rel="manifest" href="{{ '/manifest.json' | relative_url }}">
+<meta name="theme-color" content="#667eea">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Ayman Blog">
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- PWA Icons for different devices -->
+<link rel="apple-touch-icon" sizes="72x72" href="{{ '/assets/images/icon-72x72.png' | relative_url }}">
+<link rel="apple-touch-icon" sizes="96x96" href="{{ '/assets/images/icon-96x96.png' | relative_url }}">
+<link rel="apple-touch-icon" sizes="128x128" href="{{ '/assets/images/icon-128x128.png' | relative_url }}">
+<link rel="apple-touch-icon" sizes="144x144" href="{{ '/assets/images/icon-144x144.png' | relative_url }}">
+<link rel="apple-touch-icon" sizes="152x152" href="{{ '/assets/images/icon-152x152.png' | relative_url }}">
+<link rel="apple-touch-icon" sizes="192x192" href="{{ '/assets/images/icon-192x192.png' | relative_url }}">
+<link rel="apple-touch-icon" sizes="384x384" href="{{ '/assets/images/icon-384x384.png' | relative_url }}">
+<link rel="apple-touch-icon" sizes="512x512" href="{{ '/assets/images/icon-512x512.png' | relative_url }}">
+
+<!-- Service Worker Registration -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js')
+      .then(function(registration) {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }, function(err) {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+  });
+}
+</script>
 
 <!-- Font Awesome for icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <!-- Google Fonts for better typography -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +46,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- Bootstrap CSS for responsive design (if not already included) -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUa6c6vqLyNzH7DkO1X8MXEV9g5LPP3j4E9YvHnMNVNtLKQn5YGJAmOJYb3k" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Enhanced meta tags for better SEO -->
 <meta name="author" content="{{ site.social.name }}">

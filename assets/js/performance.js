@@ -1,138 +1,128 @@
-// Performance and UX Enhancement Scripts
-
-// Lazy loading for images (if not natively supported)
-if ('loading' in HTMLImageElement.prototype === false) {
-  const script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js';
-  document.head.appendChild(script);
-}
-
-// Service Worker registration for PWA features
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(registration => {
-        console.log('SW registered: ', registration);
-      })
-      .catch(registrationError => {
-        console.log('SW registration failed: ', registrationError);
-      });
-  });
-}
-
-// Smooth scroll polyfill for older browsers
-document.addEventListener('DOMContentLoaded', function() {
-  // Add smooth scrolling to all links
-  const links = document.querySelectorAll('a[href^="#"]');
-  
-  links.forEach(link => {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      
-      const targetId = this.getAttribute('href');
-      const targetSection = document.querySelector(targetId);
-      
-      if (targetSection) {
-        targetSection.scrollIntoView({
-          behavior: 'smooth'
-        });
-      }
-    });
-  });
-});
-
-// Enhanced reading time calculation
-function calculateReadingTime() {
-  const article = document.querySelector('article, .post-content, .content');
-  if (!article) return;
-  
-  const text = article.textContent || article.innerText;
-  const wordsPerMinute = 200;
-  const words = text.trim().split(/\s+/).length;
-  const readingTime = Math.ceil(words / wordsPerMinute);
-  
-  const readingTimeElement = document.querySelector('.reading-time');
-  if (readingTimeElement) {
-    readingTimeElement.textContent = `${readingTime} min read`;
-  }
-}
-
-// Initialize reading time calculation
-document.addEventListener('DOMContentLoaded', calculateReadingTime);
-
-// Copy to clipboard functionality
-function setupCopyButtons() {
-  const codeBlocks = document.querySelectorAll('pre code');
-  
-  codeBlocks.forEach(block => {
-    const pre = block.parentElement;
-    const button = document.createElement('button');
-    button.className = 'copy-button';
-    button.textContent = 'Copy';
-    button.setAttribute('aria-label', 'Copy code to clipboard');
+// Performance monitoring and optimization for Ayman Aboghonim's blog
+(function() {
+    'use strict';
     
-    button.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(block.textContent);
-        button.textContent = 'Copied!';
-        button.classList.add('copied');
-        
-        setTimeout(() => {
-          button.textContent = 'Copy';
-          button.classList.remove('copied');
-        }, 2000);
-      } catch (err) {
-        console.error('Failed to copy text: ', err);
-      }
-    });
-    
-    pre.appendChild(button);
-  });
-}
-
-// Initialize copy buttons
-document.addEventListener('DOMContentLoaded', setupCopyButtons);
-
-// Progressive enhancement for form validation
-document.addEventListener('DOMContentLoaded', function() {
-  const forms = document.querySelectorAll('form');
-  
-  forms.forEach(form => {
-    const inputs = form.querySelectorAll('input[required], textarea[required]');
-    
-    inputs.forEach(input => {
-      input.addEventListener('invalid', function(e) {
-        e.target.setCustomValidity('');
-        
-        if (!e.target.validity.valid) {
-          e.target.setCustomValidity('Please fill out this field correctly.');
+    // Performance monitoring
+    function initializePerformanceMonitoring() {
+        // Core Web Vitals monitoring
+        if ('web-vital' in window) {
+            import('https://unpkg.com/web-vitals@3.5.2/dist/web-vitals.js').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+                getCLS(console.log);
+                getFID(console.log);
+                getFCP(console.log);
+                getLCP(console.log);
+                getTTFB(console.log);
+            });
         }
-      });
-      
-      input.addEventListener('input', function(e) {
-        e.target.setCustomValidity('');
-      });
-    });
-  });
-});
-
-// Analytics helper (privacy-friendly)
-function trackEvent(category, action, label) {
-  if (typeof gtag !== 'undefined') {
-    gtag('event', action, {
-      event_category: category,
-      event_label: label,
-    });
-  }
-}
-
-// Track external link clicks
-document.addEventListener('DOMContentLoaded', function() {
-  const externalLinks = document.querySelectorAll('a[href^="http"]:not([href*="' + window.location.hostname + '"])');
-  
-  externalLinks.forEach(link => {
-    link.addEventListener('click', function() {
-      trackEvent('External Link', 'Click', this.href);
-    });
-  });
-});
+        
+        // Page load performance
+        window.addEventListener('load', () => {
+            const perfData = performance.getEntriesByType('navigation')[0];
+            
+            const performanceMetrics = {
+                domContentLoaded: perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart,
+                windowLoad: perfData.loadEventEnd - perfData.loadEventStart,
+                totalPageLoad: perfData.loadEventEnd - perfData.navigationStart,
+                dnsLookup: perfData.domainLookupEnd - perfData.domainLookupStart,
+                tcpConnect: perfData.connectEnd - perfData.connectStart,
+                serverResponse: perfData.responseEnd - perfData.requestStart
+            };
+            
+            // Log performance in development
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                console.table(performanceMetrics);
+            }
+            
+            // Store performance data
+            localStorage.setItem('blog-performance', JSON.stringify(performanceMetrics));
+        });
+    }
+    
+    // Image optimization and lazy loading enhancement
+    function optimizeImages() {
+        const images = document.querySelectorAll('img');
+        
+        images.forEach(img => {
+            // Add loading="lazy" if not present
+            if (!img.hasAttribute('loading')) {
+                img.setAttribute('loading', 'lazy');
+            }
+            
+            // Add error handling
+            img.addEventListener('error', function() {
+                this.style.display = 'none';
+                console.warn('Failed to load image:', this.src);
+            });
+            
+            // Add fade-in effect when loaded
+            img.addEventListener('load', function() {
+                this.style.opacity = '0';
+                this.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => {
+                    this.style.opacity = '1';
+                }, 10);
+            });
+        });
+    }
+    
+    // Preload critical resources
+    function preloadCriticalResources() {
+        const criticalResources = [
+            '/assets/css/style.css',
+            '/assets/js/custom.js'
+        ];
+        
+        criticalResources.forEach(resource => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.href = resource;
+            link.as = resource.endsWith('.css') ? 'style' : 'script';
+            document.head.appendChild(link);
+        });
+    }
+    
+    // Service Worker for caching (Progressive Web App features)
+    function registerServiceWorker() {
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    }
+    
+    // Initialize all performance optimizations
+    function init() {
+        // Run immediately
+        preloadCriticalResources();
+        
+        // Run when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                optimizeImages();
+                initializePerformanceMonitoring();
+            });
+        } else {
+            optimizeImages();
+            initializePerformanceMonitoring();
+        }
+        
+        // Register service worker for PWA features
+        registerServiceWorker();
+    }
+    
+    // Auto-initialize
+    init();
+    
+    // Export for manual initialization if needed
+    window.BlogPerformance = {
+        init,
+        optimizeImages,
+        initializePerformanceMonitoring
+    };
+})();

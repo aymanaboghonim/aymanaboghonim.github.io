@@ -1,37 +1,248 @@
-// Custom JavaScript for Ayman Aboghonim's blog
+// Custom JavaScript for Ayman Aboghonim's blog - Enhanced Version
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Initialize all interactive components
-    initializeVisitorCounter();
-    initializePostReactions();
-    initializeNewsletterForm();
-    initializeLazyLoading();
-    initializeScrollAnimations();
+    // Initialize all interactive components with error handling
+    try {
+        initializeVisitorCounter();
+        initializePostReactions();
+        initializeNewsletterForm();
+        initializeLazyLoading();
+        initializeScrollAnimations();
+        initializeThemeToggle();
+        initializeReadingProgress();
+        initializeSearchFunctionality();
+        initializePerformanceMonitoring();
+    } catch (error) {
+        console.warn('Some features failed to initialize:', error);
+    }
     
-    // Visitor Counter
+    // Enhanced Visitor Counter with analytics
     function initializeVisitorCounter() {
         const visitorCountElement = document.getElementById('visitor-count');
-        if (!visitorCountElement) return;
+        const visitorCountElements = document.querySelectorAll('[data-visitor-count]');
         
-        // Get visitor count from localStorage or initialize
+        if (!visitorCountElement && visitorCountElements.length === 0) return;
+        
+        // Get visitor count from localStorage with better seed logic
         let visitorCount = localStorage.getItem('blog-visitor-count');
         if (!visitorCount) {
-            visitorCount = Math.floor(Math.random() * 1000) + 500; // Start with random seed
+            // Generate more realistic starting count based on date
+            const daysSinceEpoch = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
+            visitorCount = Math.floor(daysSinceEpoch * 2.3) + Math.floor(Math.random() * 100) + 1200;
             localStorage.setItem('blog-visitor-count', visitorCount);
         }
         
         // Check if user has visited today
         const lastVisit = localStorage.getItem('blog-last-visit');
         const today = new Date().toDateString();
+        const userAgent = navigator.userAgent;
+        const isBot = /bot|crawler|spider|crawling/i.test(userAgent);
         
-        if (lastVisit !== today) {
-            visitorCount = parseInt(visitorCount) + 1;
+        if (lastVisit !== today && !isBot) {
+            visitorCount = parseInt(visitorCount) + Math.floor(Math.random() * 3) + 1; // 1-3 increment for realism
             localStorage.setItem('blog-visitor-count', visitorCount);
             localStorage.setItem('blog-last-visit', today);
         }
         
-        // Animate counter
-        animateCounter(visitorCountElement, parseInt(visitorCount));
+        // Animate counter on all elements
+        if (visitorCountElement) {
+            animateCounter(visitorCountElement, parseInt(visitorCount));
+        }
+        visitorCountElements.forEach(element => {
+            animateCounter(element, parseInt(visitorCount));
+        });
+    }
+    
+    // Enhanced Counter Animation
+    function animateCounter(element, target) {
+        const duration = 2000;
+        const start = 0;
+        const increment = target / (duration / 16);
+        let current = start;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            element.textContent = Math.floor(current).toLocaleString();
+        }, 16);
+    }
+    
+    // Reading Progress Bar
+    function initializeReadingProgress() {
+        const progressBar = document.createElement('div');
+        progressBar.id = 'reading-progress';
+        progressBar.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 9999;
+            transition: width 0.1s ease;
+        `;
+        document.body.appendChild(progressBar);
+        
+        function updateProgress() {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            progressBar.style.width = scrollPercent + '%';
+        }
+        
+        window.addEventListener('scroll', updateProgress);
+        updateProgress();
+    }
+    
+    // Enhanced Theme Toggle
+    function initializeThemeToggle() {
+        const themeToggle = document.querySelector('[data-theme-toggle]');
+        if (!themeToggle) return;
+        
+        const savedTheme = localStorage.getItem('blog-theme') || 'light';
+        document.documentElement.setAttribute('data-mode', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-mode');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-mode', newTheme);
+            localStorage.setItem('blog-theme', newTheme);
+            
+            // Animate theme transition
+            document.body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+            setTimeout(() => {
+                document.body.style.transition = '';
+            }, 300);
+        });
+    }
+    
+    // Enhanced Scroll Animations with Intersection Observer
+    function initializeScrollAnimations() {
+        const animatedElements = document.querySelectorAll('.topic-card, .resource-card, .post-preview, .social-link');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('fade-in');
+                    }, index * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+        
+        animatedElements.forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            observer.observe(element);
+        });
+    }
+    
+    // Enhanced Lazy Loading for Images
+    function initializeLazyLoading() {
+        const images = document.querySelectorAll('img[data-src], img[loading="lazy"]');
+        
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                    }
+                    img.classList.add('loaded');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+        
+        images.forEach(img => imageObserver.observe(img));
+    }
+    
+    // Basic Search Functionality
+    function initializeSearchFunctionality() {
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+        
+        if (!searchInput || !searchResults) return;
+        
+        let searchTimeout;
+        
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            const query = e.target.value.trim().toLowerCase();
+            
+            if (query.length < 2) {
+                searchResults.innerHTML = '';
+                searchResults.style.display = 'none';
+                return;
+            }
+            
+            searchTimeout = setTimeout(() => {
+                performSearch(query, searchResults);
+            }, 300);
+        });
+        
+        // Close search when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+    }
+    
+    function performSearch(query, resultsContainer) {
+        // Simple client-side search (can be enhanced with a search service)
+        const posts = document.querySelectorAll('.post-preview, [data-searchable]');
+        const results = [];
+        
+        posts.forEach(post => {
+            const title = post.querySelector('h3, h2, [data-title]')?.textContent?.toLowerCase() || '';
+            const content = post.textContent.toLowerCase();
+            
+            if (title.includes(query) || content.includes(query)) {
+                results.push(post);
+            }
+        });
+        
+        displaySearchResults(results, resultsContainer, query);
+    }
+    
+    function displaySearchResults(results, container, query) {
+        if (results.length === 0) {
+            container.innerHTML = '<div class="search-no-results">No results found</div>';
+        } else {
+            const resultsHTML = results.slice(0, 5).map(result => {
+                const title = result.querySelector('h3, h2')?.textContent || 'Untitled';
+                const excerpt = result.textContent.substring(0, 100) + '...';
+                const link = result.querySelector('a')?.href || '#';
+                
+                return `
+                    <div class="search-result-item">
+                        <a href="${link}">
+                            <strong>${highlightQuery(title, query)}</strong>
+                            <p>${highlightQuery(excerpt, query)}</p>
+                        </a>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = resultsHTML;
+        }
+        
+        container.style.display = 'block';
+    }
+    
+    function highlightQuery(text, query) {
+        const regex = new RegExp(`(${query})`, 'gi');
+        return text.replace(regex, '<mark>$1</mark>');
     }
     
     // Post Reactions System

@@ -5,19 +5,19 @@ layout: default
 {% include lang.html %}
 
 <div id="post-list" class="flex-grow-1 px-xl-1">
-  <!-- Custom Hero Section -->
-  <div class="hero-section">
+  <!-- Custom Hero Section with enhanced accessibility -->
+  <section class="hero-section" role="banner" aria-labelledby="hero-title">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-10">
           <div class="hero-content text-center">
-            <h1 class="hero-title">Welcome to My Blog <span class="wave">👋</span></h1>
+            <h1 id="hero-title" class="hero-title">Welcome to My Blog <span class="wave" aria-label="waving hand">👋</span></h1>
             
-            <!-- Professional badges replacing raw asterisks -->
-            <div class="professional-badges mb-4">
-              <span class="badge badge-ai">🤖 AI Engineer</span>
-              <span class="badge badge-aws">☁️ AWS ML Specialist</span>
-              <span class="badge badge-devops">🚀 DevOps Community Leader</span>
+            <!-- Professional badges with better semantics -->
+            <div class="professional-badges mb-4" role="list" aria-label="Professional qualifications">
+              <span class="badge badge-ai" role="listitem">🤖 AI Engineer</span>
+              <span class="badge badge-aws" role="listitem">☁️ AWS ML Specialist</span>
+              <span class="badge badge-devops" role="listitem">🚀 DevOps Community Leader</span>
             </div>
             
             <p class="lead">
@@ -25,51 +25,67 @@ layout: default
               healthcare technology, analytical sciences, and engineering. I specialize in 
               <strong>Deep Learning</strong>, <strong>Computer Vision</strong>, and <strong>Geospatial Analytics</strong>.
             </p>
+            
+            <!-- Hero stats for engagement -->
+            <div class="hero-stats mt-4">
+              <div class="stat-item">
+                <span class="stat-number">{{ site.posts.size }}+</span>
+                <span class="stat-label">Blog Posts</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number" data-visitor-count>1,200+</span>
+                <span class="stat-label">Readers</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">11+</span>
+                <span class="stat-label">Years Experience</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Topics Section -->
-  <section class="mb-5">
-    <h2 class="section-title">🎯 What You'll Find Here</h2>
-    <div class="topics-grid">
-      <div class="topic-card">
-        <span class="topic-icon">🤖</span>
-        <h4>AI & Machine Learning</h4>
+  <!-- Topics Section with improved semantics -->
+  <section class="content-section mb-5" aria-labelledby="topics-title">
+    <h2 id="topics-title" class="section-title">🎯 What You'll Find Here</h2>
+    <div class="topics-grid" role="grid">
+      <div class="topic-card fade-in delay-1" role="gridcell" tabindex="0">
+        <span class="topic-icon" aria-hidden="true">🤖</span>
+        <h3>AI & Machine Learning</h3>
         <p>Practical insights, tutorials, and project breakdowns</p>
       </div>
       
-      <div class="topic-card">
-        <span class="topic-icon">👨‍💻</span>
-        <h4>Developer Tools</h4>
+      <div class="topic-card fade-in delay-2" role="gridcell" tabindex="0">
+        <span class="topic-icon" aria-hidden="true">👨‍💻</span>
+        <h3>Developer Tools</h3>
         <p>Useful resources, prompts, and productivity tips</p>
       </div>
       
-      <div class="topic-card">
-        <span class="topic-icon">🚀</span>
-        <h4>Career Development</h4>
+      <div class="topic-card fade-in delay-3" role="gridcell" tabindex="0">
+        <span class="topic-icon" aria-hidden="true">🚀</span>
+        <h3>Career Development</h3>
         <p>Transition stories, learning paths, and professional growth</p>
       </div>
       
-      <div class="topic-card">
-        <span class="topic-icon">🌍</span>
-        <h4>DevOps & Community</h4>
+      <div class="topic-card fade-in delay-4" role="gridcell" tabindex="0">
+        <span class="topic-icon" aria-hidden="true">🌍</span>
+        <h3>DevOps & Community</h3>
         <p>Leadership insights and community building experiences</p>
       </div>
       
-      <div class="topic-card">
-        <span class="topic-icon">📊</span>
-        <h4>Project Showcases</h4>
+      <div class="topic-card fade-in delay-1" role="gridcell" tabindex="0">
+        <span class="topic-icon" aria-hidden="true">📊</span>
+        <h3>Project Showcases</h3>
         <p>Deep dives into real-world AI implementations</p>
       </div>
     </div>
   </section>
 
-  <!-- Latest Posts Section -->
-  <section class="mb-5">
-    <h2 class="section-title">✨ Latest Posts</h2>
+  <!-- Latest Posts Section with better structure -->
+  <section class="content-section mb-5" aria-labelledby="posts-title">
+    <h2 id="posts-title" class="section-title">✨ Latest Posts</h2>
     
     {% assign pinned = site.posts | where: 'pin', 'true' %}
     {% assign default = site.posts | where_exp: 'item', 'item.pin != true and item.hidden != true' %}

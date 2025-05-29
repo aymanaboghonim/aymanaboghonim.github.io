@@ -4,11 +4,10 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-<div class="about-page">
-  <div class="hero-section">
+<div class="about-page">  <div class="hero-section">
     <div class="profile-header">
       <div class="profile-avatar">
-        <div class="avatar-placeholder">AA</div>
+        <img src="https://github.com/aymanaboghonim.png" alt="Ayman Aboghonim" class="avatar-image" />
       </div>
       <div class="profile-intro">
         <h1 class="profile-name">👋 Hello, I'm Ayman Aboghonim</h1>

@@ -1,7 +1,7 @@
 # The Site Configuration
 
 # Import the theme - using remote_theme for GitHub Pages compatibility
-remote_theme: cotes2020/jekyll-theme-chirpy
+remote_theme: cotes2020/jekyll-theme-chirpy@v6.5.5
 
 # GitHub Pages compatibility
 plugins:

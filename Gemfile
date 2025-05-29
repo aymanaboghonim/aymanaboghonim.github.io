@@ -1,18 +1,9 @@
 source "https://rubygems.org"
 
-gem "jekyll", "~> 4.3.0"
-gem "jekyll-theme-chirpy", "~> 7.2"
+# Use GitHub Pages gem for compatibility
+gem "github-pages", group: :jekyll_plugins
 
-group :jekyll_plugins do
-  gem "jekyll-feed", "~> 0.12"
-  gem "jekyll-sitemap"
-  gem "jekyll-seo-tag"
-  gem "jekyll-archives"
-  gem "jekyll-paginate"
-  gem "jekyll-redirect-from"
-end
-
-# For testing
+# For testing (optional)
 group :test do
   gem "html-proofer", "~> 5.0"
 end

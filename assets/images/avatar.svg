@@ -1,0 +1,26 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#357ABD;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background Circle -->
+  <circle cx="256" cy="256" r="256" fill="url(#bg)"/>
+  
+  <!-- Person Icon -->
+  <g transform="translate(256,256)" fill="white">
+    <!-- Head -->
+    <circle cx="0" cy="-60" r="50" opacity="0.9"/>
+    
+    <!-- Body -->
+    <ellipse cx="0" cy="40" rx="80" ry="120" opacity="0.9"/>
+    
+    <!-- Initials -->
+    <text x="0" y="10" text-anchor="middle" font-family="Arial, sans-serif" font-size="60" font-weight="bold" fill="#4A90E2">AA</text>
+  </g>
+  
+  <!-- Border -->
+  <circle cx="256" cy="256" r="250" fill="none" stroke="white" stroke-width="12" opacity="0.3"/>
+</svg>

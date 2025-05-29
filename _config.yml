@@ -1,0 +1,69 @@
+title: "Ayman Aboghonim's Blog"
+description: "AI Engineer sharing insights on Machine Learning, Computer Vision, DevOps, and Career Development"
+baseurl: ""
+url: "https://aymanaboghonim.github.io"
+
+# Author information
+author:
+  name: "Ayman Aboghonim"
+  bio: "AI Engineer | AWS ML Specialist | DevOps Community Leader"
+  location: "Oman"
+  linkedin: "ayman-aboghonim"
+  github: "aymanaboghonim"
+  facebook: "ayman.m.aboghonim"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Minima theme settings
+minima:
+  social_links:
+    github: aymanaboghonim
+    linkedin: ayman-aboghonim
+    facebook: ayman.m.aboghonim
+
+# Content settings
+show_excerpts: true
+paginate: 5
+
+# SEO settings
+google_analytics: # Add your GA tracking ID if you have one
+lang: en
+
+# Exclude from processing
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /:year/:month/:day/:title/
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      author: "Ayman Aboghonim"
+      
+# Navigation
+header_pages:
+  - about.md
+  - projects.md
+  - resources.md

@@ -1,204 +1,316 @@
-# The Site Configuration
+# -----------------------------------------------------------------------------
+# Site settings
+# -----------------------------------------------------------------------------
 
-# Import the theme - using remote_theme for GitHub Pages compatibility
-remote_theme: cotes2020/jekyll-theme-chirpy@v6.5.5
+title: Ayman Aboghonim # the website title
+first_name: Ayman
+middle_name: 
+last_name: Aboghonim
+contact_note: >
+  Feel free to reach out for collaborations, consultations, or discussions about AI/ML engineering and developer advocacy.
+description: > # the ">" symbol means to ignore newlines until "footer_text:"
+  Personal blog sharing AI/ML insights, career development tips, and practical developer resources. 
+  From prompt engineering to professional growth strategies. AI/ML Engineer & Developer Advocate 
+  passionate about making complex technology accessible and actionable.
+footer_text: >
+  Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
+  Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
+keywords: AI, ML, machine learning, artificial intelligence, developer advocacy, prompt engineering, career development, tech solutions
+lang: en # the language of your site
+icon: 🤖 # the emoji used as the favicon
 
-# GitHub Pages compatibility
-plugins:
-  - jekyll-feed
-  - jekyll-sitemap
-  - jekyll-seo-tag
-  - jekyll-archives
-  - jekyll-paginate
-  - jekyll-redirect-from
-  - jekyll-remote-theme
+url: https://aymanaboghonim.github.io # the base hostname & protocol for your site
+baseurl:  # the subpath of your site, e.g. /blog/. Leave blank for root
+last_updated: true # set to true if you want to display last updated in the footer
+impressum_path: # set to path to include impressum link in the footer
+back_to_top: true # set to false to disable the back to top button
 
-# The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
-# If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
-# otherwise, the layout language will use the default value of 'en'.
-lang: en
+# -----------------------------------------------------------------------------
+# Theme
+# -----------------------------------------------------------------------------
 
-# Change to your timezone › https://kevinnovak.github.io/Time-Zone-Picker
-timezone: Asia/Dubai
+# repo color theme
+repo_theme_light: default # https://github.com/anuraghazra/github-readme-stats/blob/master/themes/README.md
+repo_theme_dark: dark # https://github.com/anuraghazra/github-readme-stats/blob/master/themes/README.md
+repo_trophies:
+  enabled: true
+  theme_light: flat # https://github.com/ryo-ma/github-profile-trophy
+  theme_dark: gitdimmed # https://github.com/ryo-ma/github-profile-trophy
 
-# jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
-# ↓ --------------------------
+# -----------------------------------------------------------------------------
+# RSS Feed
+# -----------------------------------------------------------------------------
+# will use title and url fields
+# Take a look to https://github.com/jekyll/jekyll-feed for more customization
 
-title: Ayman Aboghonim # the main title
+# -----------------------------------------------------------------------------
+# Layout
+# -----------------------------------------------------------------------------
 
-tagline: AI/ML Engineer & Developer Advocate sharing insights on prompt engineering, career development, and practical tech solutions # it will display as the sub-title
+navbar_fixed: true
+footer_fixed: true
+search_enabled: true
+socials_in_search: true
+posts_in_search: true
+bib_search: false
 
-description: >- # used by seo meta and the atom feed
-  Personal blog sharing AI/ML insights, career development tips, 
-  and practical developer resources. From prompt engineering to 
-  professional growth strategies.
+# Dimensions
+max_width: 930px
 
-# Fill in the protocol & hostname for your site.
-# e.g. 'https://username.github.io', note that it does not end with a '/'.
-url: "https://aymanaboghonim.github.io"
+# -----------------------------------------------------------------------------
+# Open Graph & Schema.org
+# -----------------------------------------------------------------------------
+# Display links to the page with a preview object on social media.
+serve_og_meta: true # Include Open Graph meta tags in the HTML head
+serve_schema_org: true # Include Schema.org in the HTML head
+og_image: /assets/img/profile.jpg # The site-wide Open Graph preview image
 
-github:
-  username: aymanaboghonim # change to your github username
+# -----------------------------------------------------------------------------
+# Analytics and search engine verification
+# -----------------------------------------------------------------------------
 
-twitter:
-  username: # change to your twitter username
+google_analytics: # Add your Google Analytics measurement ID here
+cronitor_analytics: # cronitor RUM analytics site ID
+pirsch_analytics: # your Pirsch analytics site ID
+openpanel_analytics: # your Openpanel analytics client ID
 
-social:
-  # Change to your full name.
-  # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: Ayman Aboghonim
-  email: ayman.aboghonim@outlook.com # change to your email address
-  location: "Oman"
-  linkedin: "ayman-aboghonim"
-  github: "aymanaboghonim"
-  facebook: "ayman.m.aboghonim"
-  links:
-    # The first element serves as the copyright owner's link
-    # https://twitter.com/username # change to your twitter homepage
-    - https://github.com/aymanaboghonim # change to your github homepage
-    - https://www.linkedin.com/in/ayman-aboghonim
-    - https://www.facebook.com/ayman.m.aboghonim
-    # Uncomment below to add more social links
-    # - https://www.facebook.com/username
+google_site_verification: # your google-site-verification ID
+bing_site_verification: # your bing-site-verification ID
 
-google_site_verification: # fill in to your verification string
+# -----------------------------------------------------------------------------
+# Blog
+# -----------------------------------------------------------------------------
 
-# ↑ --------------------------
-# The end of `jekyll-seo-tag` settings
+blog_name: Tech Insights Blog
+blog_description: AI/ML engineering insights, career development, and practical tech solutions
+permalink: /blog/:year/:title/
+lsi: false
 
-google_analytics:
-  id: # fill in your Google Analytics ID
+# Pagination
+pagination:
+  enabled: true
+  per_page: 10
+  permalink: '/blog/page:num/'
+  title: ':title - page :num'
+  limit: 0
+  sort_field: 'date'
+  sort_reverse: true
 
-# Prefer color scheme setting.
-#
-# Note: Keep empty will follow the system prefer color by default,
-# and there will be a toggle to switch the theme between dark and light
-# on the bottom left of the sidebar.
-#
-# Available options:
-#
-#     light  - Use the light color scheme
-#     dark   - Use the dark color scheme
-#
-theme_mode: # [light|dark]
+related_blog_posts:
+  enabled: true
+  max_related: 5
+  min_common_tags: 1
 
-# The CDN endpoint for images.
-# Notice that once it is assigned, the CDN url
-# will be added to all image (site avatar & posts' images) paths starting with '/'
-#
-# e.g. 'https://cdn.com'
-img_cdn:
+# -----------------------------------------------------------------------------
+# Collections
+# -----------------------------------------------------------------------------
 
-# the avatar on sidebar, support local or CORS resources
-avatar: "/assets/images/avatar.svg"
+collections:
+  news:
+    defaults:
+      layout: post
+    output: true
+    permalink: /news/:path/
+  projects:
+    output: true
+    permalink: /projects/:path/
 
-# boolean type, the global switch for TOC in posts.
-toc: true
+news_scrollable: true # adds a vertical scroll bar if there are more than 3 news items
+news_limit: 5 # leave blank to include all the news in the `_news` folder
 
-comments:
-  active: # The global switch for posts comments, e.g., 'disqus'.  Keep it empty means disable
-  # The active options are as follows:
-  disqus:
-    shortname: # fill with the Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
+latest_posts:
+  enabled: true
+  scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
+  limit: 3 # leave blank to include all the blog posts
 
-# Self-hosted static assets, optional › https://github.com/cotes2020/chirpy-static-assets
-assets:
-  self_host:
-    enabled: # boolean, keep empty means false
-    # specify the Jekyll environment, empty means both
-    # only works if `assets.self_host.enabled` is 'true'
-    env: # [development|production]
+# -----------------------------------------------------------------------------
+# Jekyll settings
+# -----------------------------------------------------------------------------
 
-pwa:
-  enabled: true # the option for PWA feature
-
-paginate: 10
-
-# The base URL of your site
-baseurl: ""
-
-# ------------ The following options are not recommended to be modified ------------------
-
+# Markdown and syntax highlight
+markdown: kramdown
+highlighter: rouge
 kramdown:
-  syntax_highlighter: rouge
-  syntax_highlighter_opts: # Rouge Options › https://github.com/jneen/rouge#options
-    css_class: highlight
-    # default_lang: console
+  input: GFM
+  syntax_highlighter_opts:
+    css_class: 'highlight'
     span:
       line_numbers: false
     block:
-      line_numbers: true
+      line_numbers: false
       start_line: 1
 
-collections:
-  tabs:
-    output: true
-    sort_by: order
+# Includes & excludes
+include: ['_pages']
+exclude:
+  - bin
+  - Gemfile
+  - Gemfile.lock
+  - vendor
 
+# Plug-ins
+plugins:
+  - jekyll-archives
+  - jekyll-diagrams
+  - jekyll-email-protect
+  - jekyll-feed
+  - jekyll-get-json
+  - jekyll-imagemagick
+  - jekyll-jupyter-notebook
+  - jekyll-link-attributes
+  - jekyll-minifier
+  - jekyll-paginate-v2
+  - jekyll-regex-replace
+  - jekyll-responsive-image
+  - jekyll-scholar
+  - jekyll-sitemap
+  - jekyll-toc
+  - jekyll-twitter-plugin
+  - jemoji
+
+# Sitemap settings
 defaults:
   - scope:
-      path: "" # An empty string here means all files in the project
-      type: posts
+      path: "assets"
     values:
-      layout: post
-      comments: true # Enable comments in posts.
-      toc: true # Display TOC column in posts.
-      # DO NOT modify the following parameter unless you are confident enough
-      # to update the code of all other post links in this project.
-      permalink: /posts/:title/
-  - scope:
-      path: _drafts
-    values:
-      comments: false
-  - scope:
-      path: ""
-      type: tabs # see `site.collections`
-    values:
-      layout: page
-      permalink: /:title/
-  - scope:
-      path: assets/img/favicons
-    values:
-      swcache: true
-  - scope:
-      path: assets/js/dist
-    values:
-      swcache: true
+      sitemap: false
 
 sass:
   style: compressed
 
-compress_html:
-  clippings: all
-  comments: all
-  endings: all
-  profile: false
-  blanklines: false
-  ignore:
-    envs: [development]
+# -----------------------------------------------------------------------------
+# Jekyll Scholar
+# -----------------------------------------------------------------------------
 
-exclude:
-  - "*.gem"
-  - "*.gemspec"
-  - docs
-  - tools
-  - README.md
-  - LICENSE
-  - "*.config.js"
-  - package*.json
-  - Gemfile
-  - Gemfile.lock
-  - node_modules
-  - vendor/bundle/
-  - vendor/cache/
-  - vendor/gems/
-  - vendor/ruby/
+scholar:
+  last_name: [Aboghonim]
+  first_name: [Ayman]
 
-jekyll-archives:
-  enabled: [categories, tags]
-  layouts:
-    category: category
-    tag: tag
-  permalinks:
-    tag: /tags/:name/
-    category: /categories/:name/
+  style: apa
+  locale: en
+
+  source: /_bibliography/
+  bibliography: papers.bib
+  bibliography_template: bib
+  # Note: if you have latex math in your bibtex, the latex filter
+  # preprocessing may conflict with MathJAX if the latter is enabled.
+  # See https://github.com/alshedivat/al-folio/issues/357.
+  bibtex_filters: [latex, smallcaps, superscript]
+
+  replace_strings: true
+  join_strings: true
+
+  details_dir: bibliography
+  details_layout: bibtex.html
+  details_link: Details
+
+  query: "@*"
+  group_by: year
+  group_order: descending
+
+# Display different badges withs stats for your repositories
+enable_project_categories: true
+repository_categories:
+  - name: AI/ML Projects
+    include: ai-ml
+  - name: Developer Tools
+    include: dev-tools
+  - name: Open Source
+    include: open-source
+
+# -----------------------------------------------------------------------------
+# Social integration
+# -----------------------------------------------------------------------------
+
+github_username: aymanaboghonim
+twitter_username: # your Twitter handle
+mastodon_username: # your mastodon instance+username in the format instance.tld/@username
+linkedin_username: ayman-aboghonim
+medium_username: # your Medium username
+scholar_userid: # your Google Scholar ID
+semanticscholar_id: # your Semantic Scholar ID
+whatsapp_number: # your WhatsApp number (full phone number in international format. Omit any zeroes, brackets, or dashes when adding the phone number in international format.)
+orcid_id: # your ORCID ID
+research_gate_profile: # your profile on ResearchGate
+scopus_id: # your profile on Scopus
+blogger_url: # your blogger URL
+work_url: # work page URL
+keybase_username: # your keybase user name
+wikidata_id: # your wikidata id
+wikipedia_id: # your wikipedia id (Case sensitive)
+dblp_url: # your DBLP profile url
+stackoverflow_id: # your stackoverflow id
+kaggle_id: # your kaggle id
+lastfm_id: # your lastfm id
+spotify_id: # your spotify id
+pinterest_id: # your pinterest id
+unsplash_id: # your unsplash id
+instagram_id: # your instagram id
+facebook_id: # your facebook id
+youtube_id: # your youtube channel id (youtube.com/channel/your-channel-id)
+discord_id: # your discord id (18-digit unique numerical identifier)
+zotero_username: # your zotero username
+wechat_qr: # filename of your wechat qr-code saved as an image (e.g., wechat-qr.png if saved to assets/img/wechat-qr.png)
+
+contact_note: # You can even add a little note about which of these is the best way to reach you.
+
+# -----------------------------------------------------------------------------
+# Analytics and search engine verification
+# -----------------------------------------------------------------------------
+
+# For Google Analytics 4, see https://support.google.com/analytics/answer/10447272
+google_analytics: # your Google Analytics measurement ID (format: G-XXXXXXXXXX)
+
+# For Google Search Console, see https://support.google.com/webmasters/answer/9008080
+google_site_verification: # your google-site-verification ID (Google Search Console)
+
+# For Bing Webmaster Tools, see https://www.bing.com/webmasters/help/add-and-verify-site-12184f8b
+bing_site_verification: # your bing-site-verification ID (Bing Webmaster Tools)
+
+# -----------------------------------------------------------------------------
+# Other settings
+# -----------------------------------------------------------------------------
+
+jquery: false # load the jQuery library
+
+# -----------------------------------------------------------------------------
+# Library versions
+# -----------------------------------------------------------------------------
+
+bootstrap:
+  version: "4.6.1"
+  integrity:
+    css: "sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+    js: "sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
+
+fontawesome:
+  version: "6.4.0"
+  integrity: "sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8="
+
+academicons:
+  version: "1.9.1"
+  integrity: "sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg="
+
+jquery:
+  version: "3.6.0"
+  integrity: "sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+
+mathjax:
+  version: "3.2.0"
+
+masonry:
+  version: "4.2.2"
+  integrity: "sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI="
+
+mdb:
+  version: "4.20.0"
+  integrity:
+    css: "sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw="
+    js: "sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA="
+
+medium_zoom:
+  version: "1.0.8"
+  integrity: "sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8="
+
+lottie:
+  version: "5.12.2"

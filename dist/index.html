@@ -93,9 +93,11 @@
                         </a>
                         <a href="https://linkedin.com/in/ayman-aboghonim" class="text-decoration-none me-3" target="_blank">
                             <i class="bi bi-linkedin fs-4"></i>
-                        </a>
-                        <a href="https://www.facebook.com/ayman.m.aboghonim" class="text-decoration-none me-3" target="_blank">
+                        </a>                        <a href="https://www.facebook.com/ayman.m.aboghonim" class="text-decoration-none me-3" target="_blank">
                             <i class="bi bi-facebook fs-4"></i>
+                        </a>
+                        <a href="https://wa.me/201285944247" class="text-decoration-none me-3" target="_blank">
+                            <i class="bi bi-whatsapp fs-4"></i>
                         </a>                        <a href="mailto:aymanaboghonim@gmail.com" class="text-decoration-none" onclick="navigator.clipboard.writeText('aymanaboghonim@gmail.com'); this.title='Email copied to clipboard!';">
                             <i class="bi bi-envelope fs-4"></i>
                         </a>
@@ -458,9 +460,11 @@
                                     </a>
                                     <a href="https://linkedin.com/in/ayman-aboghonim" class="btn btn-outline-primary me-2 mb-2" target="_blank">
                                         <i class="bi bi-linkedin"></i> LinkedIn
-                                    </a>
-                                    <a href="https://www.facebook.com/ayman.m.aboghonim" class="btn btn-outline-primary me-2 mb-2" target="_blank">
+                                    </a>                                    <a href="https://www.facebook.com/ayman.m.aboghonim" class="btn btn-outline-primary me-2 mb-2" target="_blank">
                                         <i class="bi bi-facebook"></i> Facebook
+                                    </a>
+                                    <a href="https://wa.me/201285944247" class="btn btn-outline-primary me-2 mb-2" target="_blank">
+                                        <i class="bi bi-whatsapp"></i> WhatsApp
                                     </a>
                                     <a href="mailto:aymanaboghonim@gmail.com" class="btn btn-outline-primary mb-2" onclick="navigator.clipboard.writeText('aymanaboghonim@gmail.com'); alert('Email copied to clipboard!');">
                                         <i class="bi bi-envelope"></i> Email
@@ -494,5 +498,140 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Sanity Checks & Validation -->
+    <script>
+        // Initialize AOS with error handling
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                AOS.init({
+                    duration: 800,
+                    once: true,
+                    offset: 100
+                });
+            } catch (error) {
+                console.warn('AOS animation library failed to load:', error);
+            }
+            
+            // Validate and fix broken images
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.onerror = function() {
+                    console.warn('Failed to load image:', this.src);
+                    // Replace with placeholder or hide
+                    this.style.display = 'none';
+                    const parent = this.closest('.hero-image, .card');
+                    if (parent) {
+                        parent.style.minHeight = '200px';
+                        parent.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                        parent.style.display = 'flex';
+                        parent.style.alignItems = 'center';
+                        parent.style.justifyContent = 'center';
+                        parent.innerHTML = '<i class="bi bi-person-circle text-white" style="font-size: 4rem;"></i>';
+                    }
+                };
+            });
+            
+            // Validate external links
+            const externalLinks = document.querySelectorAll('a[target="_blank"]');
+            externalLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const url = this.href;
+                    if (!url || url === '#' || url === '') {
+                        e.preventDefault();
+                        console.warn('Invalid external link:', url);
+                        alert('This link is temporarily unavailable. Please try again later.');
+                    }
+                });
+            });
+            
+            // Email clipboard functionality with fallback
+            const emailLinks = document.querySelectorAll('[onclick*="clipboard"]');
+            emailLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const email = 'aymanaboghonim@gmail.com';
+                    
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(email).then(() => {
+                            this.title = 'Email copied to clipboard!';
+                            // Show temporary success message
+                            const originalText = this.innerHTML;
+                            this.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i>';
+                            setTimeout(() => {
+                                this.innerHTML = originalText;
+                                this.title = '';
+                            }, 2000);
+                        }).catch(() => {
+                            // Fallback: open email client
+                            window.location.href = `mailto:${email}`;
+                        });
+                    } else {
+                        // Fallback for older browsers
+                        window.location.href = `mailto:${email}`;
+                    }
+                });
+            });
+            
+            // WhatsApp link validation
+            const whatsappLinks = document.querySelectorAll('a[href*="wa.me"]');
+            whatsappLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                    if (!isMobile) {
+                        // Show helpful message for desktop users
+                        const proceed = confirm('WhatsApp works best on mobile devices. Do you want to continue to WhatsApp Web?');
+                        if (!proceed) {
+                            e.preventDefault();
+                        }
+                    }
+                });
+            });
+            
+            // Form validation (if contact forms are added later)
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    const requiredFields = form.querySelectorAll('[required]');
+                    let isValid = true;
+                    
+                    requiredFields.forEach(field => {
+                        if (!field.value.trim()) {
+                            isValid = false;
+                            field.classList.add('is-invalid');
+                        } else {
+                            field.classList.remove('is-invalid');
+                        }
+                    });
+                    
+                    if (!isValid) {
+                        e.preventDefault();
+                        alert('Please fill in all required fields.');
+                    }
+                });
+            });
+            
+            // Performance monitoring
+            if ('performance' in window) {
+                window.addEventListener('load', function() {
+                    const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+                    if (loadTime > 3000) {
+                        console.warn('Page load time is slow:', loadTime + 'ms');
+                    }
+                });
+            }
+            
+            // Console greeting for developers
+            console.log('%c🤖 Welcome to Ayman Aboghonim\'s Portfolio!', 'color: #0d6efd; font-size: 16px; font-weight: bold;');
+            console.log('%cInterested in the code? Check out: https://github.com/aymanaboghonim', 'color: #6c757d;');
+        });
+        
+        // Global error handler
+        window.addEventListener('error', function(e) {
+            console.warn('JavaScript error caught:', e.error);
+            // Don't break the user experience
+            return true;
+        });
+    </script>
 </body>
 </html>
